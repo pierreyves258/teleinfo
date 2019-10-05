@@ -15,7 +15,7 @@ Il vous faudra pour celà :
 ## Software
 ### Rapsbian
 
-Dans le fichier /boot/cmdline.txt :
+Dans le fichier ```/boot/cmdline.txt``` :
 ```
 - supprimer la ligne :
 console=serial0,115200
@@ -24,18 +24,40 @@ enable_uart=1
 ```
 
 ### InfluxDB
-
+#### RPi <= 2B
 ```
 wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.8_armhf.deb
 sudo dpkg -i influxdb_1.7.8_armhf.deb
+```
+#### RPi > 2B
+```
+wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.8_arm64.deb
+sudo dpkg -i influxdb_1.7.8_arm64.deb
+```
+
+```
 sudo systemctl enable influxdb
 sudo systemctl start influxdb
 ```
 
 ### Grafana 
+#### RPi < 2B
 ```
 wget https://dl.grafana.com/oss/release/grafana-rpi_6.4.1_armhf.deb
 sudo dpkg -i grafana-rpi_6.4.1_armhf.deb
+```
+#### RPi == 2B
+```
+wget https://dl.grafana.com/oss/release/grafana_6.4.1_armhf.deb
+sudo dpkg -i grafana_6.4.1_armhf.deb 
+```
+#### RPi > 2B
+```
+wget https://dl.grafana.com/oss/release/grafana_6.4.1_arm64.deb
+sudo dpkg -i grafana_6.4.1_arm64.deb
+```
+
+```
 sudo systemctl enable grafana-server
 sudo systemctl start grafana-server
 ```
@@ -43,7 +65,7 @@ sudo systemctl start grafana-server
 ### Script Téléinfo
 
 Editer ```/etc/rc.local``` pour lancer le script dans un tmux au démarrage
-ajoutez la ligne
+ajouter la ligne
 ``` su -l pi -c "/usr/bin/tmux new-session -s teleinfo -d  'python /home/pi/teleinfo/teleinfo.py' \; set -t teleinfo remain-on-exit on"```
 
 ```
@@ -59,5 +81,7 @@ sudo pip install influxdb
 ```
 
 Sources:
+
 http://www.magdiblog.fr/gpio/teleinfo-edf-suivi-conso-de-votre-compteur-electrique/
+
 https://github.com/SebastienReuiller/teleinfo-linky-with-raspberry
