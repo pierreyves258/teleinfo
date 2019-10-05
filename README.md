@@ -24,12 +24,12 @@ enable_uart=1
 ```
 
 ### InfluxDB
-#### RPi <= 2B
+#### RPi <= 2B (ARMv6 et ARMv7)
 ```
 wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.8_armhf.deb
 sudo dpkg -i influxdb_1.7.8_armhf.deb
 ```
-#### RPi > 2B
+#### RPi > 2B (ARM64)
 ```
 wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.8_arm64.deb
 sudo dpkg -i influxdb_1.7.8_arm64.deb
@@ -41,17 +41,17 @@ sudo systemctl start influxdb
 ```
 
 ### Grafana 
-#### RPi < 2B
+#### RPi < 2B (ARMv6)
 ```
 wget https://dl.grafana.com/oss/release/grafana-rpi_6.4.1_armhf.deb
 sudo dpkg -i grafana-rpi_6.4.1_armhf.deb
 ```
-#### RPi == 2B
+#### RPi == 2B (ARMv7)
 ```
 wget https://dl.grafana.com/oss/release/grafana_6.4.1_armhf.deb
 sudo dpkg -i grafana_6.4.1_armhf.deb 
 ```
-#### RPi > 2B
+#### RPi > 2B (ARM64)
 ```
 wget https://dl.grafana.com/oss/release/grafana_6.4.1_arm64.deb
 sudo dpkg -i grafana_6.4.1_arm64.deb
@@ -72,7 +72,7 @@ ajouter la ligne
 sudo apt install tmux
 
 mkdir /var/log/teleinfo
-sudo chmod 777 /var/log/teleinfo
+sudo chown pi /var/log/teleinfo
 
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 sudo python get-pip.py
