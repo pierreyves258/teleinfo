@@ -1,7 +1,13 @@
 # Téléinfo
+## Informations techniques
+### Singal téléinfo
+1200 bps
+7 bits/car
+parité paire
+1 bit de stop
 ## Hardware
 ### Optocoupleur
-Afin de pouvoir convertir le signal téléinfo modulé a 50Hz en un signal numérique standard vosu aurez besoin un petit montage assez simple à base d'optocoupleur.
+Afin de pouvoir convertir le signal téléinfo modulé à 50kHz en un signal numérique standard vous aurez besoin d'un petit montage assez simple à base d'optocoupleur.
 Il vous faudra pour celà : 
 
 - 1 optocoupleur SFH620A
@@ -10,78 +16,69 @@ Il vous faudra pour celà :
 
 ![](http://www.magdiblog.fr/wp-content/uploads/2014/05/teleinfo_schema.jpg)
 
+Effectuer les brachements sur le RPi:
+GND -> GND
+3.3V -> 3.3V
+RX -> GPIO15 (RXD)
+
+![](https://www.elektronik-kompendium.de/sites/raspberry-pi/fotos/raspberry-pi-15b.jpg)
+
 ### Raspberry Pi
+Testé sur RPi 3B et 3A+ avec Raspbian Buster
 
 ## Software
 ### Rapsbian
 
-Dans le fichier ```/boot/cmdline.txt``` :
+Dans le fichier ```/boot/config.txt``` :
 ```
-- supprimer la ligne :
-console=serial0,115200
 - ajouter la ligne : 
 enable_uart=1
 ```
 
 ### InfluxDB
-#### RPi <= 2B (ARMv6 et ARMv7)
 ```
 wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.8_armhf.deb
 sudo dpkg -i influxdb_1.7.8_armhf.deb
-```
-#### RPi > 2B (ARM64)
-```
-wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.8_arm64.deb
-sudo dpkg -i influxdb_1.7.8_arm64.deb
-```
-
-```
 sudo systemctl enable influxdb
 sudo systemctl start influxdb
 ```
 
 ### Grafana 
-#### RPi < 2B (ARMv6)
-```
-wget https://dl.grafana.com/oss/release/grafana-rpi_6.4.1_armhf.deb
-sudo dpkg -i grafana-rpi_6.4.1_armhf.deb
-```
-#### RPi == 2B (ARMv7)
 ```
 wget https://dl.grafana.com/oss/release/grafana_6.4.1_armhf.deb
 sudo dpkg -i grafana_6.4.1_armhf.deb 
-```
-#### RPi > 2B (ARM64)
-```
-wget https://dl.grafana.com/oss/release/grafana_6.4.1_arm64.deb
-sudo dpkg -i grafana_6.4.1_arm64.deb
-```
-
-```
 sudo systemctl enable grafana-server
 sudo systemctl start grafana-server
 ```
 
 ### Script Téléinfo
 
+Modifier le script ```téléinfo.py``` en fonction de votre compteur et abonnement (lignes 31 à 50)
+
 Editer ```/etc/rc.local``` pour lancer le script dans un tmux au démarrage
-ajouter la ligne
+ajouter la ligne (modifier le path du script teleinfo.py)
 ``` su -l pi -c "/usr/bin/tmux new-session -s teleinfo -d  'python /home/pi/teleinfo/teleinfo.py' \; set -t teleinfo remain-on-exit on"```
 
 ```
 sudo apt install tmux
 
-mkdir /var/log/teleinfo
+sudo mkdir /var/log/teleinfo
 sudo chown pi /var/log/teleinfo
 
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-sudo python get-pip.py
-sudo pip install serialpy
 sudo pip install influxdb
 ```
+Finalement redémarrez votre RPi et tout devrai démarrer automatiquement, RDV ensuite sur {rpi-address}:3000
+
+# Grafana
+## Source
+Séléctionnez InfluxDB comme source, avec pour adresse "http://localhost:8086" et pour table "teleinfo"
+Ensuite vous pouvez importer le dashboard correspondant à votre installation éléctrique
+
 
 Sources:
 
 http://www.magdiblog.fr/gpio/teleinfo-edf-suivi-conso-de-votre-compteur-electrique/
 
 https://github.com/SebastienReuiller/teleinfo-linky-with-raspberry
+
+https://www.domotique-info.fr/technologies-domotique/teleinformation/
