@@ -32,10 +32,10 @@ from influxdb import InfluxDBClient
 int_measure_keys = ['PAPP', 'ISOUSC', 'ADCO', 'PMAX']
 
 # clés téléinfo pour compteur tri"
-int_measure_keys += ['IMAX1', 'IMAX2', 'IMAX3', 'IINST1', 'IINST2', 'IINST3']
+int_measure_keys += ['IMAX1', 'IMAX2', 'IMAX3', 'IINST1', 'IINST2', 'IINST3', 'ADIR1', 'ADIR2', 'ADIR3']
 
 # clés téléinfo pour compteur mono"
-#int_measure_keys = ['IMAX', 'IINST']
+#int_measure_keys = ['IMAX', 'IINST', 'ADIR']
 
 # clés téléinfo pour abonnement tempo
 int_measure_keys += ['BBRHCJB', 'BBRHPJB', 'BBRHCJW', 'BBRHPJW', 'BBRHCJR', 'BBRHPJR']
