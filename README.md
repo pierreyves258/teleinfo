@@ -53,7 +53,7 @@ sudo systemctl start grafana-server
 
 ### Script Téléinfo
 
-Modifier le script ```téléinfo.py``` en fonction de votre compteur et abonnement (lignes 31 à 50)
+Modifier le script [```téléinfo.py```](https://raw.githubusercontent.com/pierreyves258/teleinfo/master/teleinfo.py) en fonction de votre compteur et abonnement (lignes 31 à 50)
 
 Editer ```/etc/rc.local``` pour lancer le script dans un tmux au démarrage
 ajouter la ligne (modifier le path du script teleinfo.py)
@@ -72,7 +72,7 @@ Finalement redémarrez votre RPi et tout devrai démarrer automatiquement, RDV e
 # Grafana
 ## Source
 Séléctionnez InfluxDB comme source, avec pour adresse "http://localhost:8086" et pour table "teleinfo"
-Ensuite vous pouvez importer le dashboard correspondant à votre installation éléctrique
+Ensuite vous pouvez importer le [dashboard](https://github.com/pierreyves258/teleinfo/tree/master/grafana%20dashboards) correspondant à votre installation éléctrique
 
 
 Sources:
