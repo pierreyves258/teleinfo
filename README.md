@@ -35,6 +35,15 @@ Dans le fichier ```/boot/config.txt``` :
 enable_uart=1
 ```
 
+Pour JESSIE
+Dans le fichier ```/boot/cmdline.txt``` :
+```
+- supprimer: 
+console=serial0,115200
+- ajouter: 
+enable_uart=1
+```
+
 ### InfluxDB
 ```
 wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.8_armhf.deb
